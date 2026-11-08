@@ -27,9 +27,9 @@ public class ProductosController : ControllerBase
     )
     {
         var consulta = _base.Productos.Where(p => p.Activo);
-        // solo si tiene algo un nombre
+        // solo si tiene algo un nombre, paso todo a minusculas para que no importe mayuscula o minuscula
         if (!string.IsNullOrEmpty(nombre))
-            consulta = consulta.Where(p => p.Nombre.Contains(nombre));
+            consulta = consulta.Where(p => p.Nombre.ToLower().Contains(nombre.ToLower()));
 
         // solo si tiene una categoria
         if (!string.IsNullOrEmpty(categoria))
