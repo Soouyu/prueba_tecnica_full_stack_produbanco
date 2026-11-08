@@ -92,11 +92,14 @@ ServicioTransacciones (puerto 5303):
 - GET    /api/transacciones
 - GET    /api/transacciones/{id}
 - POST   /api/transacciones
+- PUT    /api/transacciones/{id}
+- DELETE /api/transacciones/{id}
+- GET    /api/transacciones/historial/{productoId}
 
 ## Funcionalidades
 - CRUD de productos crear, listar, editar, eliminar
 - Registro de transacciones de compra y venta
-- Filtros dinamicos y paginacion en las dos pantallas productos y ventas
+- Filtros dinamicos y paginacion en las dos pantallas productos y transacciones
 - Validacion de stock, no se puede vender mas de lo disponible
 - Ajuste automatico del stock al registrar una transaccion
 - Mensajes de exito y error
@@ -120,6 +123,34 @@ ServicioProductos cada vez que se registra una compra o una venta.
 ## Evidencias
 Capturas de la aplicacion funcionando:
 
-![Pantalla de Productos](evidencias/productos.jpeg)
+Listado de productos con paginacion:
 
-![Pantalla de Transacciones](evidencias/transacciones.jpeg)
+![Listado de productos](evidencias/productos.jpeg)
+
+Listado de transacciones con paginacion:
+
+![Listado de transacciones](evidencias/transacciones.jpeg)
+
+Creacion de un producto:
+
+![Crear producto](evidencias/crear_producto.jpeg)
+
+Edicion de un producto:
+
+![Editar producto](evidencias/editar_producto.jpeg)
+
+Creacion de una transaccion:
+
+![Crear transaccion](evidencias/crear_transaccion.jpeg)
+
+Edicion de una transaccion:
+
+![Editar transaccion](evidencias/editar_transaccion.jpeg)
+
+Filtros dinamicos:
+
+![Filtros](evidencias/filtros.jpeg)
+
+Consulta del historial por producto:
+
+![Historial](evidencias/historial.jpeg)
