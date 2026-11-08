@@ -1,0 +1,46 @@
+h1 {
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  margin-left: 20px;
+}
+
+th,
+td {
+  border: 1px solid #999;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #ddd;
+}
+
+.filtros {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 4px;
+  margin-right: 10px;
+}
+
+.info {
+  margin-left: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.mensaje {
+  margin-left: 20px;
+  color: green;
+  font-weight: bold;
+}
+
+.mensaje.error {
+  color: red;
+}

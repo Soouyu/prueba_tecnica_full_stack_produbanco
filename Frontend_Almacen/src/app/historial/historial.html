@@ -1,0 +1,66 @@
+<h1>Historial por Producto</h1>
+
+<!-- filtros para consultar el historial -->
+<div class="filtros">
+  <label>Producto:</label>
+  <select [(ngModel)]="productoId">
+    <option [ngValue]="null">-- Seleccione --</option>
+    @for (p of productos; track p.id) {
+      <option [ngValue]="p.id">{{ p.nombre }}</option>
+    }
+  </select>
+
+  <label>Tipo:</label>
+  <select [(ngModel)]="filtroTipo">
+    <option value="">Todos</option>
+    <option value="COMPRA">Compra</option>
+    <option value="VENTA">Venta</option>
+  </select>
+
+  <label>Desde:</label>
+  <input type="date" [(ngModel)]="filtroFechaInicio" />
+
+  <label>Hasta:</label>
+  <input type="date" [(ngModel)]="filtroFechaFin" />
+
+  <button (click)="consultar()">Consultar</button>
+</div>
+
+@if (mensaje) {
+  <p class="mensaje" [class.error]="esError">{{ mensaje }}</p>
+}
+
+<!-- se muestra solo cuando ya se consulto -->
+@if (consultado) {
+  <div class="info">
+    <p>Producto: {{ nombreProducto }}</p>
+    <p>Stock actual: {{ stockProducto }}</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Precio Total</th>
+        <th>Detalle</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (t of transacciones; track t.id) {
+        <tr>
+          <td>{{ t.id }}</td>
+          <td>{{ t.fecha }}</td>
+          <td>{{ t.tipo }}</td>
+          <td>{{ t.cantidad }}</td>
+          <td>{{ t.precioUnitario }}</td>
+          <td>{{ t.precioTotal }}</td>
+          <td>{{ t.detalle }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
