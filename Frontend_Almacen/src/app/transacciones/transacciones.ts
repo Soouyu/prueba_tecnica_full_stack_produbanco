@@ -108,7 +108,7 @@ export class Transacciones implements OnInit {
 
   // registro la compra o venta
   guardar() {
-    // valido los campos obligatorios antes de enviar
+    // condicion que valida los campos obligatorios antes de enviar
     if (!this.transaccion.tipo || !this.transaccion.productoId) {
       this.esError = true;
       this.mensaje = 'El tipo y el producto son obligatorios';
@@ -125,6 +125,33 @@ export class Transacciones implements OnInit {
       return;
     }
 
+    // si tiene id es una edicion solo se actualiza el detalle
+    if (this.transaccion.id) {
+      this.http.put('http://localhost:5303/api/transacciones/' + this.transaccion.id, this.transaccion).subscribe({
+        next: () => {
+          this.esError = false;
+          this.mensaje = 'Transaccion editada correctamente';
+          this.limpiar();
+          this.cargarTransacciones();
+        },
+        error: (e) => {
+          this.esError = true;
+          this.mensaje = e.error.mensaje;
+        }
+      });
+      return;
+    }
+
+    // valido en el front que no se venda mas del stock que hay
+    if (this.transaccion.tipo === 'VENTA') {
+      let producto = this.productos.find(p => p.id === this.transaccion.productoId);
+      if (producto && this.transaccion.cantidad > producto.stock) {
+        this.esError = true;
+        this.mensaje = 'No hay stock suficiente, solo quedan ' + producto.stock;
+        return;
+      }
+    }
+
     this.http.post('http://localhost:5303/api/transacciones', this.transaccion).subscribe({
       next: () => {
         this.esError = false;
@@ -138,6 +165,17 @@ export class Transacciones implements OnInit {
         this.mensaje = e.error.mensaje;
       }
     });
+  }
+
+  // busco el nombre del producto por su id usando la lista  para el dropdown
+  nombreProducto(id: number) {
+    let producto = this.productos.find(p => p.id === id);
+    return producto ? producto.nombre : id;
+  }
+
+  // cargo la transaccion en el formulario para editarla
+  editar(t: any) {
+    this.transaccion = { ...t };
   }
 
   // dejo el formulario vacio

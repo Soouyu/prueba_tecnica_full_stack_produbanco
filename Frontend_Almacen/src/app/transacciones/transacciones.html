@@ -1,11 +1,12 @@
 <h1>Gestion de Transacciones</h1>
 
 <div class="formulario">
-  <h3>Nueva transaccion</h3>
+  <h3>{{ transaccion.id ? 'Editar transaccion' : 'Nueva transaccion' }}</h3>
 
   <!-- dropdown quemado con los tipos venta y compra -->
+  <!-- cuando se edita solo se deja cambiar el detalle lo demas se bloquea -->
   <label>Tipo:</label>
-  <select [(ngModel)]="transaccion.tipo">
+  <select [(ngModel)]="transaccion.tipo" [disabled]="transaccion.id">
     <option value="">-- Seleccione --</option>
     <option value="COMPRA">Compra</option>
     <option value="VENTA">Venta</option>
@@ -13,7 +14,7 @@
 
 
   <label>Producto:</label>
-  <select [(ngModel)]="transaccion.productoId">
+  <select [(ngModel)]="transaccion.productoId" [disabled]="transaccion.id">
     <option [ngValue]="null">-- Seleccione --</option>
     @for (p of productos; track p.id) {
       <option [ngValue]="p.id">{{ p.nombre }}</option>
@@ -21,10 +22,10 @@
   </select>
 
   <label>Cantidad:</label>
-  <input type="number" [(ngModel)]="transaccion.cantidad" />
+  <input type="number" [(ngModel)]="transaccion.cantidad" [disabled]="transaccion.id" />
 
   <label>Precio unitario:</label>
-  <input type="number" [(ngModel)]="transaccion.precioUnitario" />
+  <input type="number" [(ngModel)]="transaccion.precioUnitario" [disabled]="transaccion.id" />
 
   <label>Detalle:</label>
   <input [(ngModel)]="transaccion.detalle" />
@@ -68,6 +69,7 @@
       <th>Precio Unitario</th>
       <th>Precio Total</th>
       <th>Detalle</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -76,11 +78,14 @@
         <td>{{ t.id }}</td>
         <td>{{ t.fecha }}</td>
         <td>{{ t.tipo }}</td>
-        <td>{{ t.productoId }}</td>
+        <td>{{ nombreProducto(t.productoId) }}</td>
         <td>{{ t.cantidad }}</td>
         <td>{{ t.precioUnitario }}</td>
         <td>{{ t.precioTotal }}</td>
         <td>{{ t.detalle }}</td>
+        <td>
+          <button (click)="editar(t)">Editar</button>
+        </td>
       </tr>
     }
   </tbody>
