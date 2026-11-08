@@ -1,0 +1,94 @@
+<h1>Gestion de Transacciones</h1>
+
+<div class="formulario">
+  <h3>Nueva transaccion</h3>
+
+  <!-- dropdown quemado con los tipos venta y compra -->
+  <label>Tipo:</label>
+  <select [(ngModel)]="transaccion.tipo">
+    <option value="">-- Seleccione --</option>
+    <option value="COMPRA">Compra</option>
+    <option value="VENTA">Venta</option>
+  </select>
+
+
+  <label>Producto:</label>
+  <select [(ngModel)]="transaccion.productoId">
+    <option [ngValue]="null">-- Seleccione --</option>
+    @for (p of productos; track p.id) {
+      <option [ngValue]="p.id">{{ p.nombre }}</option>
+    }
+  </select>
+
+  <label>Cantidad:</label>
+  <input type="number" [(ngModel)]="transaccion.cantidad" />
+
+  <label>Precio unitario:</label>
+  <input type="number" [(ngModel)]="transaccion.precioUnitario" />
+
+  <label>Detalle:</label>
+  <input [(ngModel)]="transaccion.detalle" />
+
+  <button (click)="guardar()">Guardar</button>
+  <button (click)="limpiar()">Cancelar</button>
+</div>
+
+
+@if (mensaje) {
+  <p class="mensaje" [class.error]="esError">{{ mensaje }}</p>
+}
+
+<!-- filtros de busqueda -->
+<div class="filtros">
+  <label>Tipo:</label>
+  <select [(ngModel)]="filtroTipo">
+    <option value="">Todos</option>
+    <option value="COMPRA">Compra</option>
+    <option value="VENTA">Venta</option>
+  </select>
+
+  <label>Desde:</label>
+  <input type="date" [(ngModel)]="filtroFechaInicio" />
+
+  <label>Hasta:</label>
+  <input type="date" [(ngModel)]="filtroFechaFin" />
+
+  <button (click)="buscar()">Buscar</button>
+  <button (click)="limpiarFiltros()">Limpiar</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Tipo</th>
+      <th>Producto</th>
+      <th>Cantidad</th>
+      <th>Precio Unitario</th>
+      <th>Precio Total</th>
+      <th>Detalle</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (t of transacciones; track t.id) {
+      <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.fecha }}</td>
+        <td>{{ t.tipo }}</td>
+        <td>{{ t.productoId }}</td>
+        <td>{{ t.cantidad }}</td>
+        <td>{{ t.precioUnitario }}</td>
+        <td>{{ t.precioTotal }}</td>
+        <td>{{ t.detalle }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- paginacion -->
+<div class="paginacion">
+  <button (click)="anterior()">Anterior</button>
+  <span>Pagina {{ pagina }} - Total: {{ total }}</span>
+  <button (click)="siguiente()">Siguiente</button>
+</div>

@@ -1,0 +1,11 @@
+# .NET (archivos de compilacion)
+bin/
+obj/
+
+# Configuracion local del editor
+.vs/
+.vscode/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

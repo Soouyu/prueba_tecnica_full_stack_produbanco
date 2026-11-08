@@ -1,0 +1,93 @@
+<h1>Gestion de Productos</h1>
+
+<div class="formulario">
+  <h3>{{ producto.id ? 'Editar producto' : 'Nuevo producto' }}</h3>
+
+  <label>Nombre:</label>
+  <input [(ngModel)]="producto.nombre" />
+
+  <label>Descripcion:</label>
+  <input [(ngModel)]="producto.descripcion" />
+
+
+ <!-- dropdown quemado para fines practicos -->
+  <label>Categoria:</label>
+  <select [(ngModel)]="producto.categoria">
+    <option value="">-- Seleccione --</option>
+    <option value="Computadoras">Computadoras</option>
+    <option value="Accesorios">Accesorios</option>
+    <option value="Monitores">Monitores</option>
+  </select>
+
+  <label>Precio:</label>
+  <input type="number" [(ngModel)]="producto.precio" />
+
+  <label>Stock:</label>
+  <input type="number" [(ngModel)]="producto.stock" />
+
+  <label>Imagen (URL):</label>
+  <input [(ngModel)]="producto.imagen" />
+
+  <button (click)="guardar()">Guardar</button>
+  <button (click)="limpiar()">Cancelar</button>
+</div>
+
+@if (mensaje) {
+  <p class="mensaje" [class.error]="esError">{{ mensaje }}</p>
+}
+
+<!-- filtros de busqueda -->
+<div class="filtros">
+  <label>Buscar por nombre:</label>
+  <input [(ngModel)]="filtroNombre" />
+
+  <label>Categoria:</label>
+  <select [(ngModel)]="filtroCategoria">
+    <option value="">Todas</option>
+    <option value="Computadoras">Computadoras</option>
+    <option value="Accesorios">Accesorios</option>
+    <option value="Monitores">Monitores</option>
+  </select>
+
+  <button (click)="buscar()">Buscar</button>
+  <button (click)="limpiarFiltros()">Limpiar</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Imagen</th>
+      <th>Nombre</th>
+      <th>Categoria</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (p of productos; track p.id) {
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>
+          <img [src]="p.imagen" alt="producto" class="foto" />
+        </td>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.categoria }}</td>
+        <td>{{ p.precio }} $</td>
+        <td>{{ p.stock }}</td>
+        <td>
+          <button (click)="editar(p)">Editar</button>
+          <button (click)="eliminar(p.id)">Eliminar</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- paginacion -->
+<div class="paginacion">
+  <button (click)="anterior()">Anterior</button>
+  <span>Pagina {{ pagina }} - Total: {{ total }}</span>
+  <button (click)="siguiente()">Siguiente</button>
+</div>

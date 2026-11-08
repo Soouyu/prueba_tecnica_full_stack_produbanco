@@ -1,0 +1,76 @@
+table {
+  border-collapse: collapse;
+  margin-left: 20px;
+}
+
+th,
+td {
+  border: 1px solid #999;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+h1 {
+  text-align: center;
+}
+
+th {
+  background-color: #ddd;
+}
+
+.foto {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.formulario {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.formulario label {
+  display: block;
+  margin-top: 8px;
+}
+
+.formulario input,
+.formulario select {
+  padding: 4px;
+  width: 300px;
+}
+
+.formulario button {
+  margin-top: 10px;
+  margin-right: 8px;
+}
+
+.mensaje {
+  margin-left: 20px;
+  color: green;
+  font-weight: bold;
+}
+
+.mensaje.error {
+  color: red;
+}
+
+.filtros {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.filtros input,
+.filtros select {
+  padding: 4px;
+  margin-right: 10px;
+}
+
+.paginacion {
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.paginacion span {
+  margin: 0 15px;
+}

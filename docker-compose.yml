@@ -1,0 +1,43 @@
+services:
+  # base de datos postgresql
+  postgres:
+    image: postgres:16
+    container_name: inventario_postgresql_servicio
+    environment:
+      POSTGRES_USER: inventario_user
+      POSTGRES_PASSWORD: inventario12345
+      POSTGRES_DB: inventario_db_banco
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./base_productos.sql:/docker-entrypoint-initdb.d/base_productos.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  # microservicio de productos
+  productos:
+    build: ./backend/ServicioProductos
+    container_name: servicio_productos
+    environment:
+      # dentro de docker la base se llama por el nombre del servicio postgres y puerto interno 5432
+      - ConnectionStrings__ConexionPostgres=Host=postgres;Port=5432;Database=inventario_db_banco;Username=inventario_user;Password=inventario12345
+    ports:
+      - "5202:8080"
+    depends_on:
+      - postgres
+
+  # microservicio de transacciones
+  transacciones:
+    build: ./backend/ServicioTransacciones
+    container_name: servicio_transacciones
+    environment:
+      - ConnectionStrings__ConexionPostgres=Host=postgres;Port=5432;Database=inventario_db_banco;Username=inventario_user;Password=inventario12345
+      # para llamar al otro microservicio su nombre dentro de docker
+      - ServicioProductos__Url=http://productos:8080
+    ports:
+      - "5303:8080"
+    depends_on:
+      - postgres
+      - productos
+
+volumes:
+  postgres_data:
